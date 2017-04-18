@@ -1,0 +1,201 @@
+$primaryColor: #fff;
+$title-font: bold 24px/1.5 'Open Sans', sans-serif;
+$cool-red: #F44336;
+$box-shadow-bottom-only: 0 0 4px rgba(0, 0, 0, 0.2);
+
+
+body {
+background: $primaryColor;
+} 
+
+h1 {
+font: $title-font;	
+color: $cool-red;
+}
+.container {
+box-shadow: $box-shadow-bottom-only;
+
+}
+
+$primaryColor: #fff;
+/*
+body {
+  $primaryColor: #ccc !global;
+  background: $primaryColor;
+}
+*/
+
+p {
+  color: $primaryColor;
+}
+
+$container-width: 100%;
+$column-count: 4;
+$margin: 1%;
+
+.container {
+  width: $container-width;
+}
+
+.column {
+  background: #1abc9c;
+  height: 200px;
+  display: block;
+  float: left;
+  width: ($container-width / $column-count) - ($margin * 2);
+  margin: 0 $margin;
+}
+
+$buttonColor: #2ecc71;
+$buttonDark: darken($buttonColor, 10%);
+$buttonDarker: darken($buttonDark, 10%);
+
+button {
+  background: $buttonColor;
+  border-radius: 3px;
+  box-shadow: 0px 5px 0px $buttonDark;
+  border: 0;
+  color: white;
+  font-size: 17px;
+  padding: 10px 30px;
+  display: inline-block;
+  outline: 0;
+  &:hover {
+    background: $buttonDark;
+    box-shadow: 0px 5px 0px $buttonDarker;
+  }
+  &:active {
+    box-shadow: none;
+    margin-top: 5px;
+  }
+}
+
+body {
+  text-align: center;
+  padding-top: 100px;
+}
+
+.first-component {
+    .text { font-size: 1.4rem; }
+    .button { font-size: 1.7rem; }
+    @at-root .second-component {
+        .text { font-size: 1.2rem; }
+        .button { font-size: 1.4rem; }
+    }
+}
+
+.input {
+  border-radius: 3px;
+  border: 4px solid #ddd;
+  color: #555;
+  font-size: 17px;
+  padding: 10px 20px;
+  display: inline-block;
+  outline: 0;
+}
+
+.error-input {
+  @extend .input;
+  border:4px solid #e74c3c;
+}
+
+body {
+  text-align: center;
+  padding-top: 100px;
+}
+
+%input-style {
+  border-radius: 3px;
+  color: #555;
+  font-size: 17px;
+  padding: 10px 20px;
+  display: inline-block;
+  outline: 0;
+}
+
+.input {
+  @extend %input-style;
+  border: 4px solid #ddd;
+}
+
+.error-input {
+  @extend %input-style;
+  border:4px solid #e74c3c;
+}
+
+body {
+  text-align: center;
+  padding-top: 100px;
+}
+
+@mixin media($queryString){
+    @media #{$queryString} {
+      @content;
+    }
+}
+
+.container {
+    width: 900px;
+    @include media("(max-width: 767px)"){
+        width: 100%;
+    }
+}
+
+$settings: (
+    maxWidth: 800px,
+    columns: 12,
+    margin: 15px,
+    breakpoints: (
+        xs: "(max-width : 480px)",
+        sm: "(max-width : 768px) and (min-width: 481px)",
+        md: "(max-width : 1024px)  and (min-width: 769px)",
+        lg: "(min-width : 1025px)"
+    )   
+);
+
+@mixin renderGridStyles($settings){
+  .container {
+    padding-right: map-get($settings, "margin");
+    padding-left: map-get($settings, "margin");
+    margin-right: auto;
+    margin-left: auto;
+    max-width: map-get($settings,"maxWidth");
+  }
+  
+  .row {
+    margin-right: map-get($settings, "margin") * -1;
+    margin-left: map-get($settings, "margin") * -1;
+  }
+  $breakpoints: map-get($settings, "breakpoints");
+  @each $key, $breakpoint in $breakpoints {
+    @include media($breakpoint) {
+      @include renderGrid($key, $settings);
+    }
+  }
+}
+
+@mixin renderGrid($key, $settings) {
+  $i: 1;
+  @while $i <= map-get($settings, "columns") {
+    .col-#{$key}-#{$i} {
+      float: left;
+      width: 100% * $i / map-get($settings,"columns");
+    }
+    $i: $i+1;
+  }
+}
+
+@mixin media($queryString){
+    @media #{$queryString} {
+      @content;
+    }
+}
+
+@include renderGridStyles($settings);
+
+p {
+  padding: 20px;
+  color: white;
+  background: #9b59b6;
+  margin: 20px;
+}
